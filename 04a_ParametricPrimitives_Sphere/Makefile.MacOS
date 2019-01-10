@@ -1,0 +1,11 @@
+GLEW_INCLUDE = include
+GLEW_LIB = /opt/local/lib
+
+main: main.o ShaderProgram.o ObjMesh.o UVSphere.o
+	g++ -std=c++11 -o main $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
+.cpp.o:
+	g++ -std=c++11 -Wno-deprecated-declarations -c -o $@ $< -I$(GLEW_INCLUDE)
+
+clean:
+	rm -f main *.o

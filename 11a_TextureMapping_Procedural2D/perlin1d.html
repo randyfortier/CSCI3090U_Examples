@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="noise.js"></script>
+  <script type="text/javascript" src="perlin1d.js"></script>
+  <title>Perlin Noise - 1D</title>
+</head>
+<body>
+  <h2>Perlin Noise - 1D</h2>
+  <canvas id="surface" width="800" height="600" style="border:1px solid #000000;">
+  </canvas>
+  <div>
+    Perlin Noise? <input type="checkbox" id="perlinNoise" checked="checked" />
+  </div>
+  <div>
+    Scroll? <input type="checkbox" id="scroll" />
+  </div>
+  <div id="perlinControls">
+    <div>
+      X Factor: <input type="range" min="1" max="256" value="175" class="slider" id="xFactor">
+    </div>
+  </div>
+</body>
+</html>
