@@ -1,0 +1,8 @@
+main.exe: main.o ShaderProgram.o ObjMesh.o
+	g++ -o main.exe $^ -lopengl32 -lglut32 -lglew32
+
+.cpp.o:
+	g++ -c -o $@ $< -I$(GL_INCLUDE)
+
+clean:
+	rm -f main.exe *.o

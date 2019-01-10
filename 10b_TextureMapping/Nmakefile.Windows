@@ -1,0 +1,9 @@
+main.exe: main.obj ShaderProgram.obj ObjMesh.obj
+	link /nologo /out:main.exe /SUBSYSTEM:console main.obj ShaderProgram.obj ObjMesh.obj opengl32.lib lib\glut32.lib lib\glew32.lib
+
+.cpp.obj:
+	cl /I include /EHsc /nologo /Fo$@ /c $<
+
+clean:
+	del main.exe
+  del *.obj
