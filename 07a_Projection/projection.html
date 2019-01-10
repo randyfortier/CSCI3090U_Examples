@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script type="text/javascript" src="projection.js"></script>
+  <title>Projections</title>
+</head>
+<body>
+  <h2>Projections</h2>
+  <canvas id="surface" width="400" height="400" style="border:1px solid #000000;">
+  </canvas>
+  <div>
+    X translation: <input type="range" min="-50" max="50" value="0" class="slider" id="xTranslationSlider">
+    <input type="text" id="xTranslationValue" />
+  </div>
+  <div>
+    Y translation: <input type="range" min="-50" max="50" value="0" class="slider" id="yTranslationSlider">
+    <input type="text" id="yTranslationValue" />
+  </div>
+  <div>
+    Z translation: <input type="range" min="-100" max="100" value="0" class="slider" id="zTranslationSlider">
+    <input type="text" id="zTranslationValue" />
+  </div>
+  <div>
+    X Rotation angle: <input type="range" min="0" max="62.8" value="0" class="slider" id="xRotationSlider">
+    <input type="text" id="xRotationValue" />
+  </div>
+  <div>
+    Y Rotation angle: <input type="range" min="0" max="62.8" value="0" class="slider" id="yRotationSlider">
+    <input type="text" id="yRotationValue" />
+  </div>
+  <div>
+    Z Rotation angle: <input type="range" min="0" max="62.8" value="0" class="slider" id="zRotationSlider">
+    <input type="text" id="zRotationValue" />
+  </div>
+  <div>
+    X Scale: <input type="range" min="1" max="20" value="10" class="slider" id="xScaleSlider">
+    <input type="text" id="xScaleValue" />
+  </div>
+  <div>
+    Y Scale: <input type="range" min="1" max="20" value="10" class="slider" id="yScaleSlider">
+    <input type="text" id="yScaleValue" />
+  </div>
+  <div>
+    Z Scale: <input type="range" min="1" max="20" value="20" class="slider" id="zScaleSlider">
+    <input type="text" id="zScaleValue" />
+  </div>
+  <div>
+    <input type="checkbox" id="ortho" /> Orthographic
+  </div>
+</body>
+</html>
