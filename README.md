@@ -31,4 +31,12 @@ In this repository, you will find the in-class examples and base projects for CS
 
 ## Texture Mapping
 
+- 10b_TextureMapping - demonstration of simple 2D image-based texture mapping (diffuse colour texture)
 - 11a_TextureMapping_Procedural2D - demonstrations of perlin noise
+- 11a_TextureMapping_Procedural3D - demonstration of using perlin noise in a shader as a texture source
+- 11b_TextureMapping_NormalMapping - demonstration of using a normal map texture, along with a diffuse colour texture
+- 11b_TectureMapping_SkyBox_QuaternionTrackball - demonstration of skybox rendering, reflecting/refraction mapping, and the use of trackball rotation, implemented using quaternions
+
+## Ray Tracing
+
+- 12b_RayTracing - demonstration of basic ray tracing and the Phong shading model
