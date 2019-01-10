@@ -1,0 +1,11 @@
+GLEW_INCLUDE = /opt/local/include
+GLEW_LIB = /opt/local/lib
+
+baseopengl: baseopengl.o
+	g++ -o baseopengl $^ -framework GLUT -framework OpenGL -L$(GLEW_LIB) -lGLEW
+
+.cpp.o:
+	g++ -Wno-deprecated-declarations -c -o $@ $< -I$(GLEW_INCLUDE)
+
+clean:
+	rm -f baseopengl *.o

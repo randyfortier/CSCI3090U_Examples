@@ -1,0 +1,9 @@
+baseopengl.exe: baseopengl.obj
+	link /nologo /out:baseopengl.exe /SUBSYSTEM:console baseopengl.obj opengl32.lib lib\glut32.lib lib\glew32.lib
+
+.cpp.obj:
+	cl /I include /EHsc /nologo /Fo$@ /c $<
+
+clean:
+	del baseopengl.exe
+  del *.obj

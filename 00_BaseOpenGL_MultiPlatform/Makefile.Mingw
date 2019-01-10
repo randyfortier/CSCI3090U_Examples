@@ -1,0 +1,8 @@
+baseopengl.exe: baseopengl.o
+	g++ -o baseopengl.exe $^ -lopengl32 -lglut32 -lglew32
+
+.cpp.o:
+	g++ -c -o $@ $< -I$(GL_INCLUDE)
+
+clean:
+	rm -f baseopengl.exe *.o
