@@ -69,9 +69,45 @@ GLuint createGeometry() {
 	// set the background colour
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 
-	// TODO:  Add the geometry
+	// Add the geometry
 
-	// TODO:  Add the shader code
+	// create a buffer to store the vertex positions in graphics memory
+	GLuint positionBufferId;
+	glGenBuffers(1, &positionBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, positionBufferId);
+
+	// the positions
+	float positions[6] = {
+		-0.5f, -0.5f,  // a
+		 0.0f,  0.5f,  // b
+		 0.5f, -0.5f   // c
+	};
+
+	// pass the data to OpenGL (graphics memory)
+	glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(float), positions, GL_STATIC_DRAW);
+
+	// create and enable a vertex attribute array
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+	// Add the shader code
+	std::string vertexShaderCode = ""
+		"#version 330 core\n"
+		"\n"
+		"layout(location = 0) in vec4 position;\n"
+		"\n"
+		"void main() {\n"
+		"   gl_Position = position;\n"
+		"}\n";
+
+	std::string fragmentShaderCode = ""
+		"#version 330 core\n"
+		"\n"
+		"layout(location = 0) out vec4 colour;\n"
+		"\n"
+		"void main() {\n"
+		"   colour = vec4(1.0, 0.3, 0.0, 1.0);\n"
+		"}\n";
 
 	// create a program from our shaders
 	GLuint programId = createShaderProgram(vertexShaderCode, fragmentShaderCode);
@@ -118,8 +154,8 @@ static GLuint createShaderProgram(const std::string& vertexShaderSource, const s
 
 	// create and link the shaders into a program
 	GLuint programId = glCreateProgram();
-	glAttachShader(programId, vShaderId);
 	glAttachShader(programId, fShaderId);
+	glAttachShader(programId, vShaderId);
 	glLinkProgram(programId);
 	glValidateProgram(programId);
 
