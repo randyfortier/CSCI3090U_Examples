@@ -58,10 +58,69 @@ void UVSphere::save(const std::string filename) {
    }
 
    // TODO:  Handle the top special case
+   unsigned int c = positions.size();
+   glm::vec3 topCentre(0.0, this->radius, 0.0);
+   positions.push_back(topCentre);
+
+   // calculate texture coordinates, using the spherical coordinates
+   glm::vec2 topuv(0.5, 1.0);
+   textureCoords.push_back(topuv);
+
+   // calculate the surface normals
+   glm::vec3 topNormal = glm::normalize(topCentre - centre);
+   normals.push_back(topNormal);
+
+   unsigned int row = this->numVerticalSegments - 1;
+   for (unsigned int col = 1; col < this->numHorizontalSegments; col++) {
+     // form a triangle between col, col-1, and the top centre
+     unsigned int a = (row * this->numHorizontalSegments) + col;
+     unsigned int b = (row * this->numHorizontalSegments) + (col-1);
+
+     vertexIndices.push_back(a);
+     vertexIndices.push_back(b);
+     vertexIndices.push_back(c);
+   }
 
    // TODO:  Handle the bottom special case
+   c = positions.size();
+   glm::vec3 bottomCentre(0.0, -1 * this->radius, 0.0);
+   positions.push_back(bottomCentre);
+
+   // calculate texture coordinates, using the spherical coordinates
+   glm::vec2 bottomuv(0.5, 0.0);
+   textureCoords.push_back(bottomuv);
+
+   // calculate the surface normal
+   glm::vec3 bottomNormal = glm::normalize(bottomCentre - centre);
+   normals.push_back(bottomNormal);
+
+   row = 0;
+   for (unsigned int col = 1; col < this->numHorizontalSegments; col++) {
+     // form a triangle between col, col-1, and the bottom centre
+     unsigned int a = col;
+     unsigned int b = col - 1;
+
+     vertexIndices.push_back(c);
+     vertexIndices.push_back(b);
+     vertexIndices.push_back(a);
+   }
 
    // TODO:  Handle the last column special case
+   unsigned int lastCol = this->numHorizontalSegments - 1;
+   for (row = 1; row < this->numVerticalSegments; row++) {
+     unsigned int a = ((row-1) * this->numHorizontalSegments);
+     unsigned int b = ((row-1) * this->numHorizontalSegments) + lastCol;
+     unsigned int c = (row * this->numHorizontalSegments);
+     unsigned int d = (row * this->numHorizontalSegments) + lastCol;
+
+     vertexIndices.push_back(b);
+     vertexIndices.push_back(d);
+     vertexIndices.push_back(a);
+
+     vertexIndices.push_back(d);
+     vertexIndices.push_back(b);
+     vertexIndices.push_back(c);
+   }
 
    std::ofstream fileOut(filename.c_str());
 
