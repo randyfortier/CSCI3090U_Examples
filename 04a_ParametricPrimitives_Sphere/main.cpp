@@ -64,6 +64,7 @@ static void createGeometry(void) {
 
   glGenBuffers(1, &textureCoords_vbo);
   glBindBuffer(GL_ARRAY_BUFFER, textureCoords_vbo);
+  // should be vec2
   glBufferData(GL_ARRAY_BUFFER, numVertices * sizeof(glm::vec3), vertexTextureCoords, GL_STATIC_DRAW);
 
   glGenBuffers(1, &normals_vbo);

@@ -6,6 +6,56 @@
 
 void UVSphere::save(const std::string filename) {
    // TODO:  Generate the sphere vertices
+   float deltaTheta = (M_PI * 2.0) / this->numVerticalSegments;
+   float deltaPhi   = (M_PI * 2.0) / this->numHorizontalSegments;
+
+   std::vector<glm::vec3> positions;
+   std::vector<glm::vec2> textureCoords;
+   std::vector<glm::vec3> normals;
+   std::vector<unsigned int> vertexIndices;
+
+   glm::vec3 centre(0.0, 0.0, 0.0);
+   for (unsigned int latitudeIndex = 0; latitudeIndex < this->numHorizontalSegments; latitudeIndex++) {
+      float phi = -1 * M_PI + (float)latitudeIndex * deltaPhi;
+      for (unsigned int longitudeIndex = 0; longitudeIndex < this->numVerticalSegments; longitudeIndex++) {
+         float theta = (float)longitudeIndex * deltaTheta;
+
+         // positions - parametric equations for a sphere
+         float x = this->radius * cos(theta) * sin(phi);
+         float y = this->radius * cos(phi);
+         float z = this->radius * sin(theta) * sin(phi);
+
+         glm::vec3 pos(x, y, z);
+         positions.push_back(pos);
+
+         // texture coordinates
+         float u = theta / (2.0 * M_PI);
+         float v = (phi + M_PI) / (2.0 * M_PI);
+         glm::vec2 uv(u, v);
+         textureCoords.push_back(uv);
+
+         // surface normals
+         glm::vec3 normal = glm::normalize(pos - centre);
+         normals.push_back(normal);
+
+         // generate the triangles
+         if ((latitudeIndex > 0) && (longitudeIndex > 0)) {
+            unsigned int a = (latitudeIndex * this->numHorizontalSegments) + longitudeIndex;
+            unsigned int b = (latitudeIndex * this->numHorizontalSegments) + longitudeIndex - 1;
+            unsigned int c = ((latitudeIndex - 1) * this->numHorizontalSegments) + longitudeIndex;
+            unsigned int d = ((latitudeIndex - 1) * this->numHorizontalSegments) + longitudeIndex - 1;
+
+            vertexIndices.push_back(a);
+            vertexIndices.push_back(b);
+            vertexIndices.push_back(c);
+
+            vertexIndices.push_back(d);
+            vertexIndices.push_back(c);
+            vertexIndices.push_back(b);
+
+         }
+      }
+   }
 
    // TODO:  Handle the top special case
 
