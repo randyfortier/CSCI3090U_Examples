@@ -10,4 +10,5 @@ void main() {
   vec4 baseColour = vec4(1.0, 0.0, 0.0, 1.0);
 
   gl_FragColor = 0.5 * baseColour + 0.7 * dot(N, L) * baseColour;
+  //gl_FragColor = dot(N, L) * baseColour; // no ambient
 }

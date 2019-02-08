@@ -15,6 +15,7 @@
 #include "Shaders.h"
 #include "teapot.h"
 
+// camera rotation
 float eyex, eyey, eyez;
 
 double theta, phi;
