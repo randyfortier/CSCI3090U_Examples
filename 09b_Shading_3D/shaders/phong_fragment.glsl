@@ -18,7 +18,8 @@ void main() {
    // diffuse
    float diffuse = clamp(dot(normal, lightVector_viewspace), 0, 1);
 
-   // TODO:  Attenuate
+   // attenuate
+   //diffuse = diffuse * (1.0 / (1.0 + (0.00025 * distance * distance)));
 
    // specular
    vec3 incidenceVector = -lightVector_viewspace;

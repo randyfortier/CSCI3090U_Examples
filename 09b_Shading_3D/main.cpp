@@ -18,6 +18,7 @@
 #include "ObjMesh.h"
 
 #define SCALE_FACTOR 2.0f
+#define SHININESS_STEP 1.0f
 
 int width, height;
 
@@ -40,7 +41,7 @@ bool rotateObject = true;
 float scaleFactor = 1.0f;
 float lastX = std::numeric_limits<float>::infinity();
 float lastY = std::numeric_limits<float>::infinity();
-
+float shininess = 25.0f;
 
 static void createGeometry(void) {
   ObjMesh mesh;
@@ -88,7 +89,6 @@ static void update(void) {
 
     glutPostRedisplay();
 }
-
 
 static void render(void) {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -150,11 +150,11 @@ static void render(void) {
 
   // the colour of our object
   GLuint diffuseColourId = glGetUniformLocation(programId, "u_DiffuseColour");
-  glUniform4f(diffuseColourId, 0.3, 0.2, 0.8, 1.0);
+  glUniform4f(diffuseColourId, 0.8, 0.2, 0.2, 1.0);
 
   // the shininess of the object's surface
   GLuint shininessId = glGetUniformLocation(programId, "u_Shininess");
-  glUniform1f(shininessId, 25);
+  glUniform1f(shininessId, shininess);
 
   // find the names (ids) of each vertex attribute
   GLint positionAttribId = glGetAttribLocation(programId, "position");
@@ -224,12 +224,16 @@ static void mouse(int button, int state, int x, int y) {
 }
 
 static void keyboard(unsigned char key, int x, int y) {
-    std::cout << "Key pressed: " << key << std::endl;
-    if (key == 'l') {
+   std::cout << "Key pressed: " << key << std::endl;
+   if (key == 'l') {
       animateLight = !animateLight;
-    } else if (key == 'r') {
+   } else if (key == 'r') {
       rotateObject = !rotateObject;
-    }
+   } else if (key == 'w') {
+      shininess += SHININESS_STEP;
+   } else if (key == 's') {
+      shininess -= SHININESS_STEP;
+   }
 }
 
 int main(int argc, char** argv) {
