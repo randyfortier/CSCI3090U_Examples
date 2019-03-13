@@ -44,7 +44,7 @@ float lastY = std::numeric_limits<float>::infinity();
 
 static void createGeometry(void) {
   ObjMesh mesh;
-  mesh.load("meshes/house.obj", true, true);
+  mesh.load("meshes/apple.obj", true, true);
 
   numVertices = mesh.getNumIndexedVertices();
   Vector3* vertexPositions = mesh.getIndexedPositions();
@@ -254,8 +254,8 @@ int main(int argc, char** argv) {
 
     createGeometry();
     ShaderProgram program;
-    //program.loadShaders("shaders/gouraud_vertex.glsl", "shaders/gouraud_fragment.glsl");
-    program.loadShaders("shaders/phong_vertex.glsl", "shaders/phong_fragment.glsl");
+   // program.loadShaders("shaders/gouraud_vertex.glsl", "shaders/gouraud_fragment.glsl");
+   program.loadShaders("shaders/phong_vertex.glsl", "shaders/phong_fragment.glsl");
   	programId = program.getProgramId();
 
     glutMainLoop();
