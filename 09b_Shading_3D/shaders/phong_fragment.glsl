@@ -28,7 +28,7 @@ void main() {
    float cosAngle = clamp(dot(eyeVector, reflectionVector), 0, 1);
    float specular = pow(cosAngle, u_Shininess);
 
-   gl_FragColor = u_DiffuseColour * specular +
+   gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0) * specular +
                   u_DiffuseColour * diffuse +
                   ambientColour;
 }

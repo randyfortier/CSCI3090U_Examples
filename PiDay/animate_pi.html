@@ -5,17 +5,42 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script type="text/javascript" src="animate_pi.js"></script>
-  <title>Estimating Pi Using Polynomials</title>
+  <title>Estimating &pi; Using Polynomials</title>
+  <style>
+   .form {
+      display: grid;
+      grid-template-columns: 1fr 3fr 14fr;
+      grid-column-gap: 5rem;
+   }
+   label {
+      grid-column: 1;
+      width: 200px;
+   }
+   input {
+      grid-column: 2;
+      width: 300px;
+      border: none;
+   }
+   button {
+      grid-column: 1;
+   }
+  </style>
 </head>
 <body>
-  <h2>Estimating Pi Using Polynomials</h2>
-  <canvas id="surface" width="600" height="400" style="border:1px solid #000000;">
+  <h2>Estimating &pi; Using Polynomials</h2>
+  <canvas id="surface" width="600" height="600" style="border:1px solid #000000;">
   </canvas>
-  <div>
-    Speed: <input type="range" min="0" max="100" value="50" class="slider" id="speed">
-  </div>
-  <div>
+  <div class="form">
+    <label for="speed">Speed:</label>
+    <input type="range" min="0" max="100" value="50" class="slider" id="speed">
+
+    <label for="n">n:</label>
+    <input type="text" id="n" />
+
+    <label for="pi">&pi; estimate:</label>
+    <input type="text" id="pi" />
+
     <button id="stopgo">Go</button>
-  </div>
+   </div>
 </body>
 </html>

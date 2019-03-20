@@ -30,30 +30,63 @@ GLuint positions_vbo = 0;
 GLuint textureCoords_vbo = 0;
 GLuint normals_vbo = 0;
 GLuint colours_vbo = 0;
+GLuint textureId;
 
 unsigned int numVertices;
+
+bool rotating = true;
 
 unsigned int loadTexture(char const * path);
 
 static void createTexture(std::string filename) {
-   // TODO:  load the image data into a bitmap
+   int imageWidth, imageHeight;
+   int numComponents;
 
-   // TODO:  generate a texture name
+   // load the image data into a bitmap
+   unsigned char *bitmap = stbi_load(filename.c_str(),
+                                     &imageWidth,
+                                     &imageHeight,
+                                     &numComponents, 4);
 
-   // TODO:  make the texture active
+   // generate a texture name
+   glGenTextures(1, &textureId);
 
-   // TODO:  specify the functions to use when shrinking/enlarging the texture image
+   // make the texture active
+   glBindTexture(GL_TEXTURE_2D, textureId);
 
-   // TODO:  send the data to OpenGL
+   // make a texture mip map
+   glGenerateTextureMipmap(textureId);
+   glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
-   // TODO:  bind the texture to unit 0
+   // specify the functions to use when shrinking/enlarging the texture image
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
-   // TODO:  free the bitmap data
+   // specify the tiling parameters
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+   //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+   // send the data to OpenGL
+   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, imageWidth, imageHeight,
+                0, GL_RGBA, GL_UNSIGNED_BYTE, bitmap);
+
+   // bind the texture to unit 0
+   glBindTexture(GL_TEXTURE_2D, textureId);
+   glActiveTexture(GL_TEXTURE0);
+
+   // free the bitmap data
+   stbi_image_free(bitmap);
 }
 
 static void createGeometry(void) {
   ObjMesh mesh;
-  mesh.load("meshes/sphere.obj", true, true);
+  mesh.load("meshes/apple.obj", true, true);
 
   numVertices = mesh.getNumIndexedVertices();
   Vector3* vertexPositions = mesh.getIndexedPositions();
@@ -86,8 +119,10 @@ static void update(void) {
    int milliseconds = glutGet(GLUT_ELAPSED_TIME);
 
    // we'll rotate our model by an ever-increasing angle so that we can see the texture
-   float degrees = (float)milliseconds / 10.0f;
-   angle = degrees;
+   if (rotating) {
+      float degrees = (float)milliseconds / 10.0f;
+      angle = degrees;
+   }
 
    glutPostRedisplay();
 }
@@ -137,8 +172,11 @@ static void render(void) {
    glUniformMatrix4fv(mvpMatrixId, 1, GL_FALSE, &mvp[0][0]);
 
    // texture sampler - a reference to the texture we've previously created
-
-   // TODO: send the texture id to the texture sampler
+   // send the texture id to the texture sampler
+   GLuint textureUniformId = glGetUniformLocation(programId, "textureSampler");
+   glActiveTexture(GL_TEXTURE0);
+   glBindTexture(GL_TEXTURE_2D, textureId);
+   glUniform1i(textureUniformId, 0);
 
    // find the names (ids) of each vertex attribute
    GLint positionAttribId = glGetAttribLocation(programId, "position");
@@ -191,6 +229,9 @@ static void mouse(int button, int state, int x, int y) {
 }
 
 static void keyboard(unsigned char key, int x, int y) {
+   if (key == 'r') {
+      rotating = !rotating;
+   }
 }
 
 int main(int argc, char** argv) {
@@ -215,7 +256,8 @@ int main(int argc, char** argv) {
 
    createGeometry();
 
-   // TODO: load and prepare the texture
+   // load and prepare the texture
+   createTexture("textures/planks.jpg");
 
    ShaderProgram program;
   	program.loadShaders("shaders/vertex.glsl", "shaders/fragment.glsl");
