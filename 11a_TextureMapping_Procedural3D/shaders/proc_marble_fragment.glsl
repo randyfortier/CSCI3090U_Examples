@@ -153,7 +153,10 @@ float pnoise(vec4 P_old, float scale) {
 }
 
 vec4 basicPerlin(float scale) {
-   // TODO:  Implement basic perlin noise
+   // Implement basic perlin noise
+   float n = pnoise(vec4(v_TexCoord3D, 1.0), scale);
+   vec4 gray = vec4(1.0, 0.95, 0.9, 1.0);
+   return gray * vec4(0.5 + 0.5 * vec3(n, n, n), 1.0);
 }
 
 float rand(vec2 c) {
@@ -177,7 +180,33 @@ float noise(vec2 p, float freq) {
 }
 
 vec4 marble(float scale) {
-   // TODO: Implement marble texture
+   // implement marble texture
+   vec2 coords = v_TexCoord2D;
+
+   int mapHeight = 100;
+   int mapWidth = 100;
+   int octaves = 4;
+   float persistence = 0.25;
+   float lacularity = 3.5;
+
+   float amplitude = 1.0;
+   float frequency = 1.0;
+   float noiseHeight = 0.0;
+
+   for (int i = 0; i < octaves; i++) {
+      float sampleX = coords.x / scale * frequency;
+      float sampleY = coords.y / scale * frequency;
+
+      noiseHeight += noise(vec2(sampleX, sampleY), 1000);
+
+      amplitude *= persistence;
+      frequency *= lacularity;
+   }
+
+   float n = noiseHeight * 0.08;
+
+   vec4 gray = vec4(0.9, 0.7, 0.6, 1.0);
+   return gray * vec4(0.5 + 0.5 * vec3(n, n, n), 1.0);
 }
 
 void main() {

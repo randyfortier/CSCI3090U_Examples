@@ -8,15 +8,15 @@ varying vec3 v_Position;
 varying vec3 v_Position_Model;
 
 float bump(float heightScale, float widthScale, float coord) {
-   return heightScale * sin(widthScale * coord);
+   return 1.0;
 }
 
 void main() {
    vec4 baseColour = u_DiffuseColour;
 
-   // procedurally-modify the normals
-   float bumpHeightScale = 15.0;
-   float bumpWidthScale = 150.0;
+   // TODO: procedurally-modify the normals
+   float bumpHeightScale = 10;
+   float bumpWidthScale = 300;
 
    float x = v_Position_Model.x;
    float y = v_Position_Model.y;
@@ -24,11 +24,11 @@ void main() {
 
    vec3 normal = v_Normal;
 
-   normal.x += bump(bumpHeightScale, bumpWidthScale, x);
-   normal.y += bump(bumpHeightScale, bumpWidthScale, y);
-   normal.z += bump(bumpHeightScale, bumpWidthScale, z);
+   normal.x += bumpHeightScale * sin(bumpWidthScale * x);
+   normal.y += bumpHeightScale * sin(bumpWidthScale * y);
+   normal.z += bumpHeightScale * sin(bumpWidthScale * z);
 
-   normal = normalize(normal); // weirdest line of code ever
+   normal = normalize(normal);
 
    // lighting and shading
 

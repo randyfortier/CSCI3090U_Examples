@@ -241,8 +241,8 @@ int main(int argc, char** argv) {
    ShaderProgram program;
    //program.loadShaders("shaders/gouraud_vertex.glsl", "shaders/gouraud_fragment.glsl");
    //program.loadShaders("shaders/phong_vertex.glsl", "shaders/phong_fragment.glsl");
-   //program.loadShaders("shaders/proc_bump_vertex.glsl", "shaders/proc_bump_fragment.glsl");
-   program.loadShaders("shaders/proc_marble_vertex.glsl", "shaders/proc_marble_fragment.glsl");
+   program.loadShaders("shaders/proc_bump_vertex.glsl", "shaders/proc_bump_fragment.glsl");
+   //program.loadShaders("shaders/proc_marble_vertex.glsl", "shaders/proc_marble_fragment.glsl");
    //program.loadShaders("shaders/proc_checker_vertex.glsl", "shaders/proc_checker_fragment.glsl");
   	programId = program.getProgramId();
 
