@@ -14,7 +14,7 @@ float bump(float heightScale, float widthScale, float coord) {
 void main() {
    vec4 baseColour = u_DiffuseColour;
 
-   // TODO: procedurally-modify the normals
+   // procedurally-modify the normals
    float bumpHeightScale = 10;
    float bumpWidthScale = 300;
 

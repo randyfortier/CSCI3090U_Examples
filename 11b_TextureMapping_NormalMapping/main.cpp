@@ -53,7 +53,7 @@ int main(void) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
 	// Open a window and create its OpenGL context
-	window = glfwCreateWindow(width, height, "CSCI 4110U - Normal Mapping", NULL, NULL);
+	window = glfwCreateWindow(width, height, "CSCI 3090U - Normal Mapping", NULL, NULL);
 	if (window == NULL) {
 		std::cerr << "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible." << std::endl;
 		getchar();
