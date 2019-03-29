@@ -5,5 +5,11 @@ varying vec3 v_Normal;
 varying vec3 v_Position;
 
 void main() {
-   gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+   float eta = 0.65;
+
+   vec3 N = normalize(v_Normal);
+   vec3 I = normalize(v_Position - u_EyePosition);
+   vec3 R = refract(I, N, eta);
+
+   gl_FragColor = vec4(texture(u_TextureSampler, R).rgb, 1.0);
 }

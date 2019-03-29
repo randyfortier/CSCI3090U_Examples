@@ -354,6 +354,7 @@ int main(void) {
 		// Don't use this in real code !!
 		////////////////////////////////////////////////////////
 
+///*
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf((const GLfloat*)&ProjectionMatrix[0]);
 		glMatrixMode(GL_MODELVIEW);
@@ -406,6 +407,7 @@ int main(void) {
 			lightPos+=glm::vec3(0,1,0)*0.1f;
 			glVertex3fv(&lightPos.x);
 		glEnd();
+//*/
 
 		// Swap buffers
 		glfwSwapBuffers(window);

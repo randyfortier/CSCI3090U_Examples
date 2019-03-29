@@ -43,8 +43,17 @@ void main() {
 	// UV of the vertex. No special space for this one.
 	UV = vertexUV;
 
-	// TODO: Construct the TBN matrix to convert into tangent space
+	// Construct the TBN matrix to convert into tangent space
+	vec3 vertexTangent_cameraspace = MV3x3 * vertexTangent_modelspace;
+	vec3 vertexBitangent_cameraspace = MV3x3 * vertexBitangent_modelspace;
+	vec3 vertexNormal_cameraspace = MV3x3 * vertexNormal_modelspace;
 
-	// TODO: Convert the light direction and eye direction into tangent space for lighting calculations
-	
+	mat3 TBN = transpose(mat3(vertexTangent_cameraspace,
+	                          vertexBitangent_cameraspace,
+									  vertexNormal_cameraspace));
+
+
+	// Convert the light direction and eye direction into tangent space for lighting calculations
+	LightDirection_tangentspace = TBN * LightDirection_cameraspace;
+	EyeDirection_tangentspace = TBN * EyeDirection_cameraspace;
 }

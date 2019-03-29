@@ -32,7 +32,7 @@ int width = 1024;
 int height = 768;
 
 GLuint programIds[NUM_SHADERS];
-int programIndex = 1;
+int programIndex = 2;
 int lastShaderTime = 0;
 bool animateShaders = false;
 
@@ -229,6 +229,8 @@ static void render(void) {
 
    // draw the cube map sky box
 
+   glUseProgram(skyboxProgramId);
+
    // provide the vertex positions to the shaders
    GLint skyboxPositionAttribId = glGetAttribLocation(skyboxProgramId, "position");
    glBindBuffer(GL_ARRAY_BUFFER, skybox_vbo);
@@ -240,8 +242,6 @@ static void render(void) {
    glActiveTexture(GL_TEXTURE0);  // texture unit 0
    glBindTexture(GL_TEXTURE_CUBE_MAP, skyboxTexture);
    glUniform1i(skyboxTextureId, 0);
-
-	glUseProgram(skyboxProgramId);
 
    glDepthMask(GL_FALSE);
    glDisable(GL_DEPTH_TEST);
