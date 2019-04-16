@@ -68,7 +68,42 @@ void update(void) {
 	// trace the rays
 	for (int y = 0; y < resolutionY; y++) {
 		for (int x = 0; x < resolutionX; x++) {
-			// TODO:  create a ray from the eyeLocation to this point
+			// create a ray from the eyeLocation to this point
+			Vector3 pixelLocation;
+			pixelLocation.x = ((float)x + 0.5f) * stepSizeX;
+			pixelLocation.y = ((float)y + 0.5f) * stepSizeY;
+			pixelLocation.z = 0.0f;
+
+			Vector3 rayDirection = pixelLocation - eyeLocation;
+			rayDirection.normalize();
+
+			Ray ray(eyeLocation, rayDirection);
+
+			// find any intersections
+
+			// ground plane
+			float minT = ground.intersectionPoint(ray);
+
+			// if we hit the plane, colour the pixel
+			if (!isnan(minT)) {
+				if (minT < 0.0f) {
+					minT = NAN;
+				} else {
+					raster[y * resolutionX + x] = ground.calculateShading(lightPosition, lightColour, ray, minT);
+				}
+			}
+
+			// spheres
+			for (unsigned int i = 0; i < scene.size(); i++) {
+				Sphere sphere = scene.at(i);
+				float t = sphere.intersectionPoint(ray);
+				if (!isnan(t) && t > 0.0f) {
+					if (isnan(minT) || t < minT) {
+						minT = t;
+						raster[y * resolutionX + x] = sphere.calculateShading(lightPosition, lightColour, ray, t);
+					}
+				}
+			}
 		}
 	}
 

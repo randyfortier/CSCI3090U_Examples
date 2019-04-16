@@ -1,4 +1,5 @@
-GLEW_INCLUDE = include
+PROJECT_INCLUDE = include
+OS_INCLUDE = /opt/local/include
 GLEW_LIB = /opt/local/lib
 
 main: main.o ShaderProgram.o ObjMesh.o UVSphere.o
